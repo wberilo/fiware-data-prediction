@@ -3,7 +3,7 @@ import json
 
 # Orion Context Broker configuration
 orion_host = '10.7.99.170'
-orion_port = '3010'
+orion_port = '1026'
 orion_url = f'http://{orion_host}:{orion_port}/v2/subscriptions'
 
 # Subscription payload
@@ -39,15 +39,15 @@ headers = {
     'X-Auth-token': 'Bearer 2090385d09d6884f9a189664101f87d18d207b1e'
 }
 
-# Make the request
-# response = requests.post(orion_url, headers=headers, data=json.dumps(payload))
 
-# Print the response
-# try:
-#   print(response.status_code)
-#   print(response.json())
-# except Exception as e:
-#   print(f"Error decoding JSON response: {e} {response}")
+response = requests.post(orion_url, headers=headers, data=json.dumps(payload))
+
+
+try:
+  print(response.status_code)
+  print(response.json())
+except Exception as e:
+  print(f"Error decoding JSON response: {e} {response}")
 
 from flask import Flask, request, jsonify
 

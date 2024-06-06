@@ -56,7 +56,9 @@ app = Flask(__name__)
 
 @app.route('/notify', methods=['POST'])
 def notify():
+    print("ping!")
     notification = request.get_json()
+    print(f"Received notification: {request}")
     print(f"Received notification: {notification}")
     return jsonify({'status': 'received'}), 200
 

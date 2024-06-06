@@ -46,7 +46,7 @@ response = requests.post(orion_url, headers=headers, data=json.dumps(payload))
 try:
   print(response.status_code)
   print(response.json())
-except requests.exceptions.JSONDecodeError as e:
+except Exception as e:
   print(f"Error decoding JSON response: {e} {response}")
 
 from flask import Flask, request, jsonify

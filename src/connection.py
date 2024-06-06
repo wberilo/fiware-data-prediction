@@ -24,7 +24,7 @@ payload = {
     },
     "notification": {
         "http": {
-            "url": "http://10.3.204.9:5000/notify"
+            "url": "http://10.7.99.170:5000/notify"
         },
         "attrs": [
             "ultimo_confirmados_disponivel"

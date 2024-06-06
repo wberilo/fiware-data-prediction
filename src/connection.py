@@ -24,7 +24,7 @@ payload = {
     },
     "notification": {
         "http": {
-            "url": "http://10.7.99.170:5000/notify"
+            "url": "http://10.3.225.205:5000/notify"
         },
         "attrs": [
             "ultimo_confirmados_disponivel"
@@ -53,13 +53,11 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-items = []
 
 @app.route('/notify', methods=['POST'])
 def notify():
     notification = request.get_json()
     print(f"Received notification: {notification}")
-    items.push(notification.ultimo_confirmados_disponivel)
     return jsonify({'status': 'received'}), 200
 
 if __name__ == '__main__':

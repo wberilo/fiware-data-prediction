@@ -53,13 +53,22 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+my_list = []
+
+def append_to_list(value):
+  if len(my_list) >= 5:
+    my_list.pop(0)
+  my_list.append(value)
+  print(f"List: {my_list}")
 
 @app.route('/notify', methods=['POST'])
 def notify():
   notification = request.get_json()
   data = notification.get('data', [{}])[0]
+  print(f"Received notification: {data}")
   ultimo_confirmados_disponivel = data.get('ultimo_confirmados_disponivel', None)
   print(f"Received notification: {ultimo_confirmados_disponivel.value}")
+  append_to_list(ultimo_confirmados_disponivel.value)
   return jsonify({'status': 'received'}), 200
 
 if __name__ == '__main__':

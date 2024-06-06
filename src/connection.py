@@ -36,11 +36,11 @@ payload = {
 # Headers
 headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer 810992127acbff211942e47976a108583f65e842'
+    'X-Auth-token': 'Bearer 2090385d09d6884f9a189664101f87d18d207b1e'
 }
 
 # Make the request
-response = requests.post(orion_url, headers=headers, data=json.dumps(payload))
+# response = requests.post(orion_url, headers=headers, data=json.dumps(payload))
 
 # Print the response
 try:

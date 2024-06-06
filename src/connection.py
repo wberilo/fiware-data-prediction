@@ -56,9 +56,11 @@ app = Flask(__name__)
 
 @app.route('/notify', methods=['POST'])
 def notify():
-    notification = request.get_json()
-    print(f"Received notification: {notification.data[0].ultimo_confirmados_disponivel}")
-    return jsonify({'status': 'received'}), 200
+  notification = request.get_json()
+  data = notification.get('data', {})
+  ultimo_confirmados_disponivel = data.get('ultimo_confirmados_disponivel')
+  print(f"Received notification: {ultimo_confirmados_disponivel}")
+  return jsonify({'status': 'received'}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

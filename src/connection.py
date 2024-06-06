@@ -36,7 +36,7 @@ payload = {
 # Headers
 headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ee7ff0524bd473d4c8ffcb0ec8ee2d3a2af14fa5'
+    'Authorization': 'Bearer 810992127acbff211942e47976a108583f65e842'
 }
 
 # Make the request
@@ -59,7 +59,7 @@ def notify():
   notification = request.get_json()
   data = notification.get('data', [{}])[0]
   ultimo_confirmados_disponivel = data.get('ultimo_confirmados_disponivel', None)
-  print(f"Received notification: {ultimo_confirmados_disponivel}")
+  print(f"Received notification: {ultimo_confirmados_disponivel.value}")
   return jsonify({'status': 'received'}), 200
 
 if __name__ == '__main__':

@@ -14,7 +14,7 @@ payload = {
     "entities": [
       {
         "type": "Daily_COVID_Cases_In_City_Geolocation",
-        "idPattern": ".*3550308",
+        "idPattern": ".*",
       }
     ],
     "condition": {"attrs": ["data"]},

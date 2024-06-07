@@ -10,8 +10,42 @@ orion_host = "10.7.99.170"
 orion_port = "1026"
 orion_url = f"http://{orion_host}:{orion_port}/v2/subscriptions"
 orion_url_entities = f'http://{orion_host}:{orion_port}/v2/entities'
+orion_url_subscribe = f"http://{orion_host}:{orion_port}/v2/subscriptions"
 
 
+def get_all_subscriptions():
+    # Get all subscriptions
+    response = requests.get(orion_url)
+    print(response.json())
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to retrieve subscriptions. Status code: {response.status_code}")
+        print(response.json())
+        return []
+
+def delete_subscription(subscription_id):
+    # Delete a specific subscription
+    delete_url = f'{orion_url}/{subscription_id}'
+    response = requests.delete(delete_url)
+    if response.status_code == 204:
+        print(f"Successfully deleted subscription ID: {subscription_id}")
+    else:
+        print(f"Failed to delete subscription ID: {subscription_id}. Status code: {response.status_code}")
+        print(response.json())
+
+def delete_existing_subscriptions():
+    # Get all subscriptions
+    subscriptions = get_all_subscriptions()
+    
+    # Delete each subscription
+    for subscription in subscriptions:
+        subscription_id = subscription['id']
+        if subscription['notification']['http']['url'] == "http://10.3.225.205:5000/notifyv2":
+            delete_subscription(subscription_id)
+    print("All subscriptions deleted")
+
+delete_existing_subscriptions()
 model_carregado = load_model('covid_lstm.h5')
 # Subscription payload
 payload = {
@@ -39,14 +73,23 @@ headers = {
 }
 
 
-response = requests.post(orion_url, headers=headers, data=json.dumps(payload))
+def create_subscription():
+    # Create subscription
+    response = requests.post(orion_url, headers=headers, data=json.dumps(payload))
 
-
-try:
+    try:
+        print(response.status_code)
+        print(response.json())
+    except Exception as e:
+        print(f"Error decoding JSON response: {e} {response}")
+        
     print(response.status_code)
-    print(response.json())
-except Exception as e:
-    print(f"Error decoding JSON response: {e} {response}")
+    if response.status_code == 201:
+        print("Subscription created successfully")
+    
+
+create_subscription()
+
 
 from flask import Flask, request, jsonify
 import datetime

@@ -138,9 +138,12 @@ def publish_to_orion(payload, city):
       "value": datetime.datetime.now().isoformat()
     }
   }
+  print("--------------------------------------------")
+  print("Publishing to Orion")
   print(entity)
   response = requests.post(orion_url_entities, headers={"Content-Type": "application/json"}, data=json.dumps(entity))
   print(response.status_code)
+  
   
 
 
@@ -161,9 +164,6 @@ def notify():
     data = notification.get("data", [{}])[0]
     ultimo_confirmados_disponivel = data.get("ultimo_confirmados_disponivel", None)
     codigoIbge = data.get("codigo_cidade_IBGE", None)
-    print(f"Received notification: {codigoIbge}")
-    print("SÃO PAULO")
-    print(f"Received notification: {ultimo_confirmados_disponivel}")
     append_to_list(ultimo_confirmados_disponivel.get("value", 0), codigoIbge.get("value", 0))
     return jsonify({"status": "received"}), 200
 

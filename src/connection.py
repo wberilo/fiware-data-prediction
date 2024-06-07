@@ -1,5 +1,7 @@
 import requests
 import json
+import numpy as np
+from tensorflow.keras.models import Sequential, load_model
 
 # Orion Context Broker configuration
 orion_host = "10.7.99.170"
@@ -7,6 +9,8 @@ orion_port = "1026"
 orion_url = f"http://{orion_host}:{orion_port}/v2/subscriptions"
 orion_url_entities = f'http://{orion_host}:{orion_port}/v2/entities'
 
+
+model_carregado = load_model('covid_lstm.h5')
 # Subscription payload
 payload = {
   "description": "Subscription to changes in Daily_COVID_Cases_In_City_Geolocation entity",
@@ -48,13 +52,18 @@ app = Flask(__name__)
 
 my_list = []
 
+def run_model(array):
+  xtest = np.array(array)
+  xtest_reshaped = np.reshape(xtest, (1, xtest.shape[0], 1))
+  y_pred_carregado = model_carregado.predict(xtest_reshaped)
+  publish_to_orion(y_pred_carregado)
+  
+
 def publish_to_orion(payload):
   entity = {
     "type": "Daily_COVID_Cases_In_City_Geolocation",
     "id": "3550308",
-    "data":[
-      
-    ]
+    "data": payload
   }
   response = requests.post(orion_url_entities, data=json.dumps(entity))
 
@@ -63,10 +72,13 @@ def publish_to_orion(payload):
 
 
 def append_to_list(value):
-    if len(my_list) >= 5:
+    if len(my_list) >= 10:
         my_list.pop(0)
     my_list.append(value)
     print(f"List: {my_list}")
+    
+    if len(my_list) == 10:
+        run_model(my_list)
 
 
 @app.route("/notifyv2", methods=["POST"])
@@ -79,7 +91,6 @@ def notify():
     print("SÃO PAULO")
     print(f"Received notification: {ultimo_confirmados_disponivel}")
     append_to_list(ultimo_confirmados_disponivel)
-
     return jsonify({"status": "received"}), 200
 
 

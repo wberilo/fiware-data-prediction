@@ -60,10 +60,12 @@ def append_to_list(value):
 def notify():
     notification = request.get_json()
     data = notification.get("data", [{}])[0]
-    print(f"Received notification: {data}")
     ultimo_confirmados_disponivel = data.get("ultimo_confirmados_disponivel", None)
-    print(f"Received notification: {ultimo_confirmados_disponivel.value}")
-    append_to_list(ultimo_confirmados_disponivel.value)
+    codigoIbge = data.get("codigo_cidade_IBGE", None)
+    if(codigoIbge==3550308):
+        print(f"Received notification: {ultimo_confirmados_disponivel}")
+        append_to_list(ultimo_confirmados_disponivel)
+
     return jsonify({"status": "received"}), 200
 
 

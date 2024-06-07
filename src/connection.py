@@ -62,12 +62,19 @@ def run_model(array):
   print(f"Prediction: {y_pred_carregado}")
   publish_to_orion(y_pred_carregado.tolist())
 
+publish_to_orion([1, 2, 3, 4, 5])
 def publish_to_orion(payload):
   entity = {
     "type": "predict_covid_cases",
     "id": f"predict_covid_cases_by_lstm{uuid.uuid4()}",
-    "timestamp": datetime.datetime.now().isoformat(),
-    "data": payload # Convert ndarray to list
+    "cidade" : {
+      "type" : "Text",
+      "value" : "São Paulo"
+    },
+    "payload": {
+      "type": "Array",
+      "value": payload
+    }
   }
   response = requests.post(orion_url_entities, data=json.dumps(entity))
   print(response.status_code)

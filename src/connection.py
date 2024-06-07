@@ -56,7 +56,7 @@ def run_model(array):
   xtest = np.array(array)
   xtest_reshaped = np.reshape(xtest, (1, xtest.shape[0], 1))
   y_pred_carregado = model_carregado.predict(xtest_reshaped)
-  publish_to_orion(y_pred_carregado)
+  publish_to_orion(y_pred_carregado.tolist())
   
 
 def publish_to_orion(payload):

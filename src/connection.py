@@ -62,7 +62,6 @@ def run_model(array):
   print(f"Prediction: {y_pred_carregado}")
   publish_to_orion(y_pred_carregado.tolist())
 
-publish_to_orion([1, 2, 3, 4, 5])
 def publish_to_orion(payload):
   entity = {
     "type": "predict_covid_cases",
@@ -79,6 +78,7 @@ def publish_to_orion(payload):
   response = requests.post(orion_url_entities, data=json.dumps(entity))
   print(response.status_code)
 
+publish_to_orion([1, 2, 3, 4, 5])
   
 
 

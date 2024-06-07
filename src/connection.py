@@ -17,7 +17,6 @@ payload = {
             }
         ],
         "condition": {"attrs": ["data"]},
-        "expression": {"q": "codigo_cidade_IBGE==3550308"},
     },
     "notification": {
         "http": {"url": "http://10.3.225.205:5000/notifyv2"},
@@ -62,6 +61,7 @@ def notify():
     data = notification.get("data", [{}])[0]
     ultimo_confirmados_disponivel = data.get("ultimo_confirmados_disponivel", None)
     codigoIbge = data.get("codigo_cidade_IBGE", None)
+    print(f"Received notification: {codigoIbge}")
     if(codigoIbge=='3550308'):
         print(f"Received notification: {ultimo_confirmados_disponivel}")
         append_to_list(ultimo_confirmados_disponivel)

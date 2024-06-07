@@ -98,12 +98,12 @@ app = Flask(__name__)
 
 cityDict = {}
 
-def run_model(array):
+def run_model(array, city):
   xtest = np.array(array)
   xtest_reshaped = np.reshape(xtest, (1, xtest.shape[0], 1))
   y_pred_carregado = model_carregado.predict(xtest_reshaped)
   print(f"Prediction: {y_pred_carregado}")
-  publish_to_orion(y_pred_carregado.tolist())
+  publish_to_orion(y_pred_carregado.tolist(), city)
 
 def publish_to_orion(payload, city):
   entity = {

@@ -153,9 +153,10 @@ def append_to_list(value, city_code):
     cityDict[city_code].append(value)
     if len(cityDict[city_code]) > 10:
       cityDict[city_code].pop(0)
-      run_model(cityDict[city_code])
   else:
     cityDict[city_code] = [0,0,0,0,0,0,0,0,0,value]
+  
+  run_model(cityDict[city_code])
 
 
 @app.route("/notifyv2", methods=["POST"])

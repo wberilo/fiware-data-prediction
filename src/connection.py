@@ -113,15 +113,32 @@ def publish_to_orion(payload):
       "type" : "Text",
       "value" : "São Paulo"
     },
-    "payload": {
-      "type": "Array",
-      "value": payload
+    "dia1": {
+      "type": "Real",
+      "value": payload[0]
+    },
+    "dia2": {
+      "type": "Real",
+      "value": payload[1]
+    },
+    "dia3": {
+      "type": "Real",
+      "value": payload[2]
+    },
+    "dia4": {
+      "type": "Real",
+      "value": payload[3]
+    },
+    "dia5": {
+      "type": "Real",
+      "value": payload[4]
     },
     "timestamp":{
       "type": "Date",
       "value": datetime.datetime.now().isoformat()
     }
   }
+  print(entity)
   response = requests.post(orion_url_entities, headers={"Content-Type": "application/json"}, data=json.dumps(entity))
   print(response.status_code)
   

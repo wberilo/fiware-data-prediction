@@ -2,6 +2,8 @@ import requests
 import json
 import numpy as np
 from tensorflow.keras.models import Sequential, load_model
+import uuid
+
 
 # Orion Context Broker configuration
 orion_host = "10.7.99.170"
@@ -47,6 +49,7 @@ except Exception as e:
     print(f"Error decoding JSON response: {e} {response}")
 
 from flask import Flask, request, jsonify
+import datetime
 
 app = Flask(__name__)
 
@@ -61,8 +64,9 @@ def run_model(array):
 
 def publish_to_orion(payload):
   entity = {
-    "type": "Daily_COVID_Cases_In_City_Geolocation",
-    "id": "3550308",
+    "type": "predict_covid_cases",
+    "id": f"predict_covid_cases_by_lstm{uuid.uuid4()}",
+    "timestamp": datetime.datetime.now().isoformat(),
     "data": payload.tolist()  # Convert ndarray to list
   }
   response = requests.post(orion_url_entities, data=json.dumps(entity))

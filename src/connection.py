@@ -5,6 +5,7 @@ import json
 orion_host = "10.7.99.170"
 orion_port = "1026"
 orion_url = f"http://{orion_host}:{orion_port}/v2/subscriptions"
+orion_url_entities = f'http://{orion_host}:{orion_port}/v2/entities'
 
 # Subscription payload
 payload = {
@@ -47,6 +48,19 @@ app = Flask(__name__)
 
 my_list = []
 
+def publish_to_orion(payload):
+  entity = {
+    "type": "Daily_COVID_Cases_In_City_Geolocation",
+    "id": "3550308",
+    "data":[
+      
+    ]
+  }
+  response = requests.post(orion_url_entities, data=json.dumps(entity))
+
+  
+
+
 
 def append_to_list(value):
     if len(my_list) >= 5:
@@ -61,10 +75,10 @@ def notify():
     data = notification.get("data", [{}])[0]
     ultimo_confirmados_disponivel = data.get("ultimo_confirmados_disponivel", None)
     codigoIbge = data.get("codigo_cidade_IBGE", None)
-    if(codigoIbge.value=='3550308'):
-        print("SÃO PAULO")
-        print(f"Received notification: {ultimo_confirmados_disponivel}")
-        append_to_list(ultimo_confirmados_disponivel)
+    print(f"Received notification: {codigoIbge}")
+    print("SÃO PAULO")
+    print(f"Received notification: {ultimo_confirmados_disponivel}")
+    append_to_list(ultimo_confirmados_disponivel)
 
     return jsonify({"status": "received"}), 200
 

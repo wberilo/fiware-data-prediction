@@ -39,14 +39,14 @@ headers = {
 }
 
 
-response = requests.post(orion_url, headers=headers, data=json.dumps(payload))
+# response = requests.post(orion_url, headers=headers, data=json.dumps(payload))
 
 
-try:
-    print(response.status_code)
-    print(response.json())
-except Exception as e:
-    print(f"Error decoding JSON response: {e} {response}")
+# try:
+#     print(response.status_code)
+#     print(response.json())
+# except Exception as e:
+#     print(f"Error decoding JSON response: {e} {response}")
 
 from flask import Flask, request, jsonify
 import datetime
@@ -77,6 +77,7 @@ def publish_to_orion(payload):
   }
   response = requests.post(orion_url_entities, data=json.dumps(entity))
   print(response.status_code)
+  print(response.json())
 
 publish_to_orion([1, 2, 3, 4, 5])
   

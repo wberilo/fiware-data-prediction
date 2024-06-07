@@ -90,7 +90,7 @@ def notify():
     print(f"Received notification: {codigoIbge}")
     print("SÃO PAULO")
     print(f"Received notification: {ultimo_confirmados_disponivel}")
-    append_to_list(ultimo_confirmados_disponivel)
+    append_to_list(ultimo_confirmados_disponivel.get("value", 0))
     return jsonify({"status": "received"}), 200
 
 

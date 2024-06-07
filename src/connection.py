@@ -155,7 +155,7 @@ def append_to_list(value, city_code):
       cityDict[city_code].pop(0)
       run_model(cityDict[city_code])
   else:
-    cityDict[city_code] = [value]
+    cityDict[city_code] = [0,0,0,0,0,0,0,0,0,value]
 
 
 @app.route("/notifyv2", methods=["POST"])

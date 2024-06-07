@@ -96,7 +96,7 @@ import datetime
 
 app = Flask(__name__)
 
-my_list = []
+cityDict = {}
 
 def run_model(array):
   xtest = np.array(array)
@@ -105,13 +105,13 @@ def run_model(array):
   print(f"Prediction: {y_pred_carregado}")
   publish_to_orion(y_pred_carregado.tolist())
 
-def publish_to_orion(payload):
+def publish_to_orion(payload, city):
   entity = {
     "type": "predict_covid_cases",
     "id": f"predict_covid_cases_by_lstm{uuid.uuid4()}",
-    "cidade" : {
-      "type" : "Text",
-      "value" : "São Paulo"
+    "CODIGO_IBGE": {
+      "type": "Text",
+      "value": city
     },
     "dia1": {
       "type": "Real",
@@ -145,14 +145,14 @@ def publish_to_orion(payload):
 
 
 
-def append_to_list(value):
-    if len(my_list) >= 10:
-        my_list.pop(0)
-    my_list.append(value)
-    print(f"List: {my_list}")
-    
-    if len(my_list) == 10:
-        run_model(my_list)
+def append_to_list(value, city_code):
+  if city_code in cityDict:
+    cityDict[city_code].append(value)
+    if len(cityDict[city_code]) > 10:
+      cityDict[city_code].pop(0)
+      run_model(cityDict[city_code])
+  else:
+    cityDict[city_code] = [value]
 
 
 @app.route("/notifyv2", methods=["POST"])
@@ -164,7 +164,7 @@ def notify():
     print(f"Received notification: {codigoIbge}")
     print("SÃO PAULO")
     print(f"Received notification: {ultimo_confirmados_disponivel}")
-    append_to_list(ultimo_confirmados_disponivel.get("value", 0))
+    append_to_list(ultimo_confirmados_disponivel.get("value", 0), codigoIbge.get("value", 0))
     return jsonify({"status": "received"}), 200
 
 

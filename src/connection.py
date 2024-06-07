@@ -115,23 +115,23 @@ def publish_to_orion(payload):
     },
     "dia1": {
       "type": "Real",
-      "value": payload[0]
+      "value": payload[0][0]
     },
     "dia2": {
       "type": "Real",
-      "value": payload[1]
+      "value": payload[0][1]
     },
     "dia3": {
       "type": "Real",
-      "value": payload[2]
+      "value": payload[0][2]
     },
     "dia4": {
       "type": "Real",
-      "value": payload[3]
+      "value": payload[0][3]
     },
     "dia5": {
       "type": "Real",
-      "value": payload[4]
+      "value": payload[0][4]
     },
     "timestamp":{
       "type": "Date",

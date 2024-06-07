@@ -67,7 +67,7 @@ def publish_to_orion(payload):
     "type": "predict_covid_cases",
     "id": f"predict_covid_cases_by_lstm{uuid.uuid4()}",
     "timestamp": datetime.datetime.now().isoformat(),
-    "data": payload.tolist()  # Convert ndarray to list
+    "data": payload # Convert ndarray to list
   }
   response = requests.post(orion_url_entities, data=json.dumps(entity))
   print(response.status_code)

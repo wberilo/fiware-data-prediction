@@ -62,7 +62,7 @@ def notify():
     data = notification.get("data", [{}])[0]
     ultimo_confirmados_disponivel = data.get("ultimo_confirmados_disponivel", None)
     codigoIbge = data.get("codigo_cidade_IBGE", None)
-    if(codigoIbge==3550308):
+    if(codigoIbge=='3550308'):
         print(f"Received notification: {ultimo_confirmados_disponivel}")
         append_to_list(ultimo_confirmados_disponivel)
 

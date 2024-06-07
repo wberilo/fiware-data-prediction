@@ -21,7 +21,7 @@ payload = {
     },
     "notification": {
         "http": {"url": "http://10.3.225.205:5000/notifyv2"},
-        "attrs": ["ultimo_confirmados_disponivel"],
+        "attrs": ["ultimo_confirmados_disponivel", "codigo_cidade_IBGE"],
     },
     "expires": "2024-12-25T14:00:00.00Z",
 }

@@ -56,16 +56,17 @@ def run_model(array):
   xtest = np.array(array)
   xtest_reshaped = np.reshape(xtest, (1, xtest.shape[0], 1))
   y_pred_carregado = model_carregado.predict(xtest_reshaped)
+  print(f"Prediction: {y_pred_carregado}")
   publish_to_orion(y_pred_carregado.tolist())
-  
 
 def publish_to_orion(payload):
   entity = {
     "type": "Daily_COVID_Cases_In_City_Geolocation",
     "id": "3550308",
-    "data": payload
+    "data": payload.tolist()  # Convert ndarray to list
   }
   response = requests.post(orion_url_entities, data=json.dumps(entity))
+  print(response.status_code)
 
   
 

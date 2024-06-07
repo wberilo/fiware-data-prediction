@@ -77,9 +77,6 @@ def publish_to_orion(payload):
   }
   response = requests.post(orion_url_entities, headers={"Content-Type": "application/json"}, data=json.dumps(entity))
   print(response.status_code)
-  print(response.json())
-
-publish_to_orion([1, 2, 3, 4, 5])
   
 
 

@@ -8,21 +8,21 @@ orion_url = f"http://{orion_host}:{orion_port}/v2/subscriptions"
 
 # Subscription payload
 payload = {
-    "description": "Subscription to changes in Daily_COVID_Cases_In_City_Geolocation entity",
-    "subject": {
-        "entities": [
-            {
-                "type": "Daily_COVID_Cases_In_City_Geolocation",
-                "idPattern": ".*",
-            }
-        ],
-        "condition": {"attrs": ["data"]},
-    },
-    "notification": {
-        "http": {"url": "http://10.3.225.205:5000/notifyv2"},
-        "attrs": ["ultimo_confirmados_disponivel", "codigo_cidade_IBGE"],
-    },
-    "expires": "2024-12-25T14:00:00.00Z",
+  "description": "Subscription to changes in Daily_COVID_Cases_In_City_Geolocation entity",
+  "subject": {
+    "entities": [
+      {
+        "type": "Daily_COVID_Cases_In_City_Geolocation",
+        "idPattern": ".*3550308",
+      }
+    ],
+    "condition": {"attrs": ["data"]},
+  },
+  "notification": {
+    "http": {"url": "http://10.3.225.205:5000/notifyv2"},
+    "attrs": ["ultimo_confirmados_disponivel", "codigo_cidade_IBGE"],
+  },
+  "expires": "2024-12-25T14:00:00.00Z",
 }
 
 # Headers
@@ -61,8 +61,8 @@ def notify():
     data = notification.get("data", [{}])[0]
     ultimo_confirmados_disponivel = data.get("ultimo_confirmados_disponivel", None)
     codigoIbge = data.get("codigo_cidade_IBGE", None)
-    print(f"Received notification: {codigoIbge}")
-    if(codigoIbge=='3550308'):
+    if(codigoIbge.value=='3550308'):
+        print("SÃO PAULO")
         print(f"Received notification: {ultimo_confirmados_disponivel}")
         append_to_list(ultimo_confirmados_disponivel)
 
